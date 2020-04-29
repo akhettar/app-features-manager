@@ -1,0 +1,118 @@
+basePath: /
+definitions:
+  model.EmptyBody:
+    type: object
+  model.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  model.ReleaseRequest:
+    properties:
+      platform:
+        type: string
+      status:
+        type: string
+      version:
+        type: string
+    required:
+    - platform
+    - version
+    type: object
+  model.ReleaseResponse:
+    properties:
+      flags:
+        additionalProperties:
+          type: boolean
+        type: object
+      status:
+        type: string
+    type: object
+info:
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: App Status API
+  version: "1.0"
+paths:
+  /health:
+    get:
+      description: Query the health of the service
+      operationId: health
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/model.EmptyBody'
+        "500":
+          description: Server is down
+          schema:
+            $ref: '#/definitions/model.EmptyBody'
+      summary: Health
+  /status/:
+    post:
+      consumes:
+      - application/json
+      description: Publish a new app status
+      operationId: publish-app-status
+      parameters:
+      - description: New App Status
+        in: body
+        name: status-request
+        required: true
+        schema:
+          $ref: '#/definitions/model.ReleaseRequest'
+      produces:
+      - application/json
+      responses:
+        "204": {}
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Publish App status
+  /status/version/{version}/{platform}:
+    get:
+      consumes:
+      - application/json
+      description: Query app status for a given app release version
+      operationId: get-app-status
+      parameters:
+      - description: app version
+        in: path
+        name: version
+        required: true
+        type: string
+      - description: App platform IOS, Android
+        in: path
+        name: platform
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/model.ReleaseResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/model.ReleaseResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get App Status
+swagger: "2.0"

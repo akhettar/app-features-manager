@@ -30,5 +30,7 @@ jobs:
             dep ensure
         fi
 
-    - name: Build
-      run: go build -v .
+    - name: Build and run tests
+      run: |
+        go build -v .
+        scripts/./run_test.sh
