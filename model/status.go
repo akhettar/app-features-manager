@@ -8,24 +8,25 @@ import (
 )
 
 const (
-	AppVersion  = "version"
+	// AppVersion the app version
+	AppVersion = "version"
+
+	// AppPlatform the app platform
 	AppPlatform = "platform"
 )
 
-// App Status enum
+// Status hold the status of the released version
 type Status string
 
-// App Platform
+// Platform mobile platform
 type Platform string
 
 const (
-	// App Status
 	Latest      Status = "latest"
 	Deprecated         = "deprecated"
 	Unsupported        = "unsupported"
 	Supported          = "supported"
 
-	// App platform
 	Ios        Platform = "ios"
 	Android             = "android"
 	Windows             = "windows"

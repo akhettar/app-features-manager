@@ -23,7 +23,7 @@ var (
 	// JwtSecret the JWT secret. This will get set per environment at runtime
 	JwtSecret = "SNtvSaiXEnP3eG5Pm7ORCMiphN/pOGCpq6yxo1Sx1b0="
 
-	// DB name
+	// DatabaseName
 	DatabaseName = "app-feature-release-db"
 
 	// CustomerID header
@@ -99,8 +99,8 @@ func (handler *AppVersionHandler) CreateRouter() *echo.Echo {
 	})
 
 	// Define the routes
-	e.GET("/status/version/:version/:platform", handler.GetAppFeatures, middlewareFunc)
-	e.POST("/status", handler.PublishAppStatus, middlewareFunc)
+	e.GET("/status/version/:version/:platform", handler.getAppFeatures, middlewareFunc)
+	e.POST("/status", handler.publishAppStatus, middlewareFunc)
 	e.GET("/health", handler.Health)
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	return e
@@ -118,7 +118,7 @@ func (handler *AppVersionHandler) CreateRouter() *echo.Echo {
 // @Failure 404 {object} model.ReleaseResponse	"not found"
 // @Failure 500 {object} model.ErrorResponse "Internal server error"
 // @Router /status/version/{version}/{platform} [get]
-func (handler *AppVersionHandler) GetAppFeatures(c echo.Context) error {
+func (handler *AppVersionHandler) getAppFeatures(c echo.Context) error {
 	version := c.Param(model.AppVersion)
 	platform, err := model.Platform(c.Param(model.AppPlatform)).Value()
 	if err != nil {
@@ -155,7 +155,7 @@ func (handler *AppVersionHandler) GetAppFeatures(c echo.Context) error {
 // @Failure 400 {object} model.ErrorResponse "Bad request"
 // @Failure 500 {object} model.ErrorResponse "Internal server error"
 // @Router /status/ [post]
-func (handler *AppVersionHandler) PublishAppStatus(c echo.Context) error {
+func (handler *AppVersionHandler) publishAppStatus(c echo.Context) error {
 
 	// unmarshal the request
 	request := new(model.ReleaseRequest)
