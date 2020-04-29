@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	dockertest "github.com/akhettar/docker-db"
+	"github.com/akhettar/docker-db"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
 
 	flag.Parse()
 
-	c := dockertest.StartMongoContainer()
+	c := dbtest.StartMongoContainer()
 	log.Printf("running mongo %s:%d", c.Host(), c.Port())
 
 	uri := fmt.Sprintf("mongodb://%s:%d", c.Host(), c.Port())

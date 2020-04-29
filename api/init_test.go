@@ -26,7 +26,7 @@ var (
 func TestMain(m *testing.M) {
 
 	flag.Parse()
-	c := dockertest.StartMongoContainer()
+	c := dbtest.StartMongoContainer()
 	log.Printf("running mongo with Ip %s", c.Host())
 
 	uri := fmt.Sprintf("mongodb://%s:%d", c.Host(), c.Port())

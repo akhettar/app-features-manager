@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/Unleash/unleash-client-go v0.0.0-20190923201156-aae25c357956
-	github.com/akhettar/docker-db v0.20.0
+	github.com/akhettar/docker-db v0.28.0
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/go-openapi/spec v0.19.7 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
